@@ -24,7 +24,7 @@ func (h *handler) askAndSaveForGitlabPersonalAccessTokenUntilValid(
 			personalAccessTokenURL,
 		)
 		h.logger.Notef(
-			"Your Gitlab personal access token will be stored securely in you local machine vault.",
+			"Your Gitlab personal access token will be stored securely in you local machine secrets.",
 		)
 
 		h.logger.Print("Enter your Gitlab Personal Access Token: ")
