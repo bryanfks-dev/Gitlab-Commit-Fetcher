@@ -33,7 +33,6 @@ func (h *handler) askAndSaveForGitlabPersonalAccessTokenUntilValid(
 			h.logger.Printf("Error reading token, try again")
 			continue
 		}
-
 		token = strings.TrimSpace(scanner.Text())
 		if err := h.validateGitlabPersonalToken(token); err != nil {
 			h.logger.Printf(err.Error())

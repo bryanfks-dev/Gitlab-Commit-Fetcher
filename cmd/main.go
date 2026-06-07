@@ -3,7 +3,8 @@ package main
 import (
 	"bufio"
 	"context"
-	"main/config"
+	"main/core/config"
+	"main/core/utils"
 	httpclient "main/infra/http_client"
 	"main/infra/logger"
 	"main/infra/vault"
@@ -11,7 +12,6 @@ import (
 	"main/internal/handler"
 	"main/internal/repository"
 	"main/internal/service"
-	"main/utils"
 	"os"
 )
 

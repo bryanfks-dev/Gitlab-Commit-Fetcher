@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	"main/consts"
-	"main/utils"
+	"main/core/consts"
+	"main/core/utils"
 	"os"
 
 	"github.com/goccy/go-yaml"

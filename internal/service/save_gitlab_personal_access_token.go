@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"main/errors"
+	"main/core/errors"
 	vaultconsts "main/infra/vault/consts"
 )
 

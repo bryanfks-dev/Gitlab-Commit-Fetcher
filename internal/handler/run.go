@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	apperrors "main/errors"
+	apperrors "main/core/errors"
 )
 
 func (h *handler) Run(ctx context.Context) error {

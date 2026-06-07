@@ -1,7 +1,7 @@
 package config
 
 import (
-	"main/consts"
+	"main/core/consts"
 	"os"
 
 	"github.com/goccy/go-yaml"

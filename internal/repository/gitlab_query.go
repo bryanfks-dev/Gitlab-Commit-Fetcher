@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
-	"main/errors"
+	"main/core/errors"
 	httpclient "main/infra/http_client"
 	httpclienterrors "main/infra/http_client/errors"
 	"net/http"
