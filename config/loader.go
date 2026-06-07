@@ -51,3 +51,8 @@ func LoadFromYAMLFile() *Config {
 
 	return &cfg
 }
+
+func (c *Config) ReloadConfig() {
+	cfg := LoadFromYAMLFile()
+	c = cfg
+}
