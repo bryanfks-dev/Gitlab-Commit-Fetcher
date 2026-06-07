@@ -1,0 +1,6 @@
+dist/
+.token
+
+.vscode/
+.idea/
+.zed
