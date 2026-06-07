@@ -11,8 +11,12 @@ type HttpClientOptions struct {
 	Header http.Header
 }
 
-type HttpClientGetOptions = HttpClientOptions
-type HttpClientPostOptions struct {
+type HttpClientWithBodyOptions struct {
 	HttpClientOptions
 	Body []byte
 }
+
+type HttpClientGetOptions = HttpClientOptions
+type HttpClientPostOptions = HttpClientWithBodyOptions
+type HttpClientPutOptions = HttpClientWithBodyOptions
+type HttpClientDeleteOptions = HttpClientOptions

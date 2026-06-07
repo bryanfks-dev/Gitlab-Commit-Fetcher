@@ -22,12 +22,12 @@ func main() {
 	cfg := config.LoadFromYAMLFile()
 	logger := logger.NewLogger(DistributedForUse)
 	vault := vault.NewVault("gitlab-commit-fetcher")
-	httpclient := httpclient.NewHttpClient()
+	httpClient := httpclient.NewHttpClient()
 
 	vaultRepo := vaultrepository.NewVaultRepository(logger, vault)
 	repo := repository.NewRepository(
 		logger,
-		httpclient,
+		httpClient,
 		cfg.Gitlab.GetGitlabAPIBaseURL(),
 	)
 	svc := service.NewService(logger, vaultRepo, repo)
