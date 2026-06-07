@@ -7,7 +7,10 @@ import (
 )
 
 func (h *httpClient) Get(opts *HttpClientGetOptions) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(opts.Ctx)
+	ctx, cancel := newContextWithTimeoutIfNotSet(
+		opts.Ctx,
+		opts.TimeoutInSeconds,
+	)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, opts.URL, nil)
@@ -20,7 +23,10 @@ func (h *httpClient) Get(opts *HttpClientGetOptions) (*http.Response, error) {
 }
 
 func (h *httpClient) Post(opts *HttpClientPostOptions) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(opts.Ctx)
+	ctx, cancel := newContextWithTimeoutIfNotSet(
+		opts.Ctx,
+		opts.TimeoutInSeconds,
+	)
 	defer cancel()
 
 	bodyBytes := io.NopCloser(bytes.NewReader(opts.Body))
@@ -40,7 +46,10 @@ func (h *httpClient) Post(opts *HttpClientPostOptions) (*http.Response, error) {
 }
 
 func (h *httpClient) Put(opts *HttpClientPostOptions) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(opts.Ctx)
+	ctx, cancel := newContextWithTimeoutIfNotSet(
+		opts.Ctx,
+		opts.TimeoutInSeconds,
+	)
 	defer cancel()
 
 	bodyBytes := io.NopCloser(bytes.NewReader(opts.Body))
@@ -62,7 +71,10 @@ func (h *httpClient) Put(opts *HttpClientPostOptions) (*http.Response, error) {
 func (h *httpClient) Patch(
 	opts *HttpClientPostOptions,
 ) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(opts.Ctx)
+	ctx, cancel := newContextWithTimeoutIfNotSet(
+		opts.Ctx,
+		opts.TimeoutInSeconds,
+	)
 	defer cancel()
 
 	bodyBytes := io.NopCloser(bytes.NewReader(opts.Body))
@@ -84,7 +96,10 @@ func (h *httpClient) Patch(
 func (h *httpClient) Delete(
 	opts *HttpClientDeleteOptions,
 ) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(opts.Ctx)
+	ctx, cancel := newContextWithTimeoutIfNotSet(
+		opts.Ctx,
+		opts.TimeoutInSeconds,
+	)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(

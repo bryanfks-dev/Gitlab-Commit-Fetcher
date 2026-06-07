@@ -8,13 +8,18 @@ import (
 
 func newContextWithTimeoutIfNotSet(
 	ctx context.Context,
+	timeoutInSeconds *int,
 ) (context.Context, context.CancelFunc) {
 	var cancel context.CancelFunc = func() {}
+	if timeoutInSeconds == nil {
+		t := httpclientconsts.HttpClientDefaultTimeoutInSeconds
+		timeoutInSeconds = &t
+	}
 
 	if _, ok := ctx.Deadline(); !ok {
 		ctx, cancel = context.WithTimeout(
 			ctx,
-			httpclientconsts.HttpClientDefaultTimeoutInSeconds*time.Second,
+			time.Duration(*timeoutInSeconds)*time.Second,
 		)
 	}
 	return ctx, cancel

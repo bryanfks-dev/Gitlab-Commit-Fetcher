@@ -6,9 +6,10 @@ import (
 )
 
 type HttpClientOptions struct {
-	Ctx    context.Context
-	URL    string
-	Header http.Header
+	Ctx              context.Context
+	URL              string
+	Header           http.Header
+	TimeoutInSeconds *int
 }
 
 type HttpClientWithBodyOptions struct {
