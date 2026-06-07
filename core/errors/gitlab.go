@@ -3,10 +3,13 @@ package errors
 import "errors"
 
 var (
-	ErrInvalidGitlabPersonalToken = errors.New(
-		"invalid Gitlab personal token",
+	ErrInvalidGitlabPersonalAccessToken = errors.New(
+		"invalid Gitlab personal access token",
 	)
-	ErrValidateGitlabPersonalTokenFailed = errors.New(
-		"validate Gitlab personal token failed",
+	ErrValidateGitlabPersonalAccessTokenFailed = errors.New(
+		"validate Gitlab personal access token failed",
+	)
+	ErrGetGitlabRepositoryRefComparationFailed = errors.New(
+		"get gitlab repository ref comparation failed",
 	)
 )

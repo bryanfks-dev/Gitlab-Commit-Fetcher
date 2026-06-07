@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"main/data/dto"
+	"main/data/model"
 	httpclient "main/infra/http_client"
 	"main/infra/logger"
 )
@@ -14,7 +16,18 @@ type repository struct {
 }
 
 type Repository interface {
-	ValidateGitlabPersonalToken(ctx context.Context, token string) (bool, error)
+	ValidateGitlabPersonalAccessToken(
+		ctx context.Context,
+		token string,
+	) (bool, error)
+	GetGitlabRefComparation(
+		query *dto.GetGitlabRepositoryRefComparationQuery,
+	) (*dto.RefComparationResultDTO, error)
+	GetGitlabProject(
+		ctx context.Context,
+		projectID int,
+		token string,
+	) (*model.ProjectModel, error)
 }
 
 func NewRepository(

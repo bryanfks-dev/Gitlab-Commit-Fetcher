@@ -9,15 +9,17 @@ func (s *service) CheckGitlabPersonalAccessTokenExistAndValid(
 	ctx context.Context,
 ) (bool, error) {
 	s.logger.Infof("Checking if GitLab personal access token exists in vault")
-	val, err := s.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)
-	if err != nil || val == nil {
+	token, err := s.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)
+	if err != nil || token == nil {
+		s.logger.Infof("GitLab personal access token does not exist in vault")
 		return false, err
 	}
-	token := string(val)
-	if token == "" {
+	tokenStr := string(token)
+	if tokenStr == "" {
+		s.logger.Infof("GitLab personal access token is empty")
 		return false, nil
 	}
 
 	s.logger.Infof("Checking if GitLab personal access token is valid")
-	return s.repo.ValidateGitlabPersonalToken(ctx, token)
+	return s.repo.ValidateGitlabPersonalAccessToken(ctx, tokenStr)
 }

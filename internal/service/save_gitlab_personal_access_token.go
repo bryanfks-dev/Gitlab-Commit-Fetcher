@@ -10,15 +10,15 @@ func (s *service) SaveGitlabPersonalAccessToken(
 	ctx context.Context,
 	token string,
 ) error {
-	s.logger.Infof("Setting GitLab Personal Token in vault")
+	s.logger.Infof("Setting GitLab personal access token in vault")
 	tokenByte := []byte(token)
-	ok, err := s.repo.ValidateGitlabPersonalToken(ctx, token)
+	ok, err := s.repo.ValidateGitlabPersonalAccessToken(ctx, token)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		s.logger.Infof("GitLab Personal Token is invalid")
-		return errors.ErrInvalidGitlabPersonalToken
+		s.logger.Infof("GitLab personal access token is invalid")
+		return errors.ErrInvalidGitlabPersonalAccessToken
 	}
 	return s.vaultRepo.Set(vaultconsts.GitlabPersonalTokenKey, tokenByte)
 }

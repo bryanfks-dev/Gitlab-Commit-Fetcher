@@ -10,7 +10,8 @@ import (
 )
 
 type Config struct {
-	Gitlab GitlabConfig `yaml:"gitlab"`
+	Gitlab             GitlabConfig    `yaml:"gitlab"`
+	RegisteredProjects []ProjectConfig `yaml:"registeredProjects"`
 }
 
 func LoadFromYAMLFile() *Config {
@@ -21,20 +22,20 @@ func LoadFromYAMLFile() *Config {
 		panic("Error getting running executable dirpath: " + err.Error())
 	}
 
-	configYAMLFilepath := fmt.Sprintf(
+	filepath := fmt.Sprintf(
 		"%s/%s",
 		exeDirpath,
 		consts.ConfigYAMLFilename,
 	)
-	if _, err := os.Stat(configYAMLFilepath); os.IsNotExist(err) {
-		if err := initializeYAMLFile(configYAMLFilepath); err != nil {
+	if _, err := os.Stat(filepath); os.IsNotExist(err) {
+		if err := initializeYAMLFile(); err != nil {
 			panic("Error initializing YAML file: " + err.Error())
 		}
 	}
 
-	cfgFile, err := os.Open(configYAMLFilepath)
+	cfgFile, err := os.Open(filepath)
 	if err != nil {
-		msg := fmt.Sprintf("Error openning `%s`: %v", configYAMLFilepath, err)
+		msg := fmt.Sprintf("Error openning `%s`: %v", filepath, err)
 		panic(msg)
 	}
 	defer cfgFile.Close()
@@ -43,16 +44,11 @@ func LoadFromYAMLFile() *Config {
 	if err := cfgDecoder.Decode(&cfg); err != nil {
 		msg := fmt.Sprintf(
 			"Error decoding YAML file `%s`: %v",
-			configYAMLFilepath,
+			filepath,
 			err,
 		)
 		panic(msg)
 	}
 
 	return &cfg
-}
-
-func (c *Config) ReloadConfig() {
-	cfg := LoadFromYAMLFile()
-	c = cfg
 }

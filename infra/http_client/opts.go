@@ -5,19 +5,19 @@ import (
 	"net/http"
 )
 
-type HttpClientOptions struct {
+type httpClientOptions struct {
 	Ctx              context.Context
 	URL              string
 	Header           http.Header
 	TimeoutInSeconds *int
 }
 
-type HttpClientWithBodyOptions struct {
-	HttpClientOptions
+type httpClientWithBodyOptions struct {
+	httpClientOptions
 	Body []byte
 }
 
-type HttpClientGetOptions = HttpClientOptions
-type HttpClientPostOptions = HttpClientWithBodyOptions
-type HttpClientPutOptions = HttpClientWithBodyOptions
-type HttpClientDeleteOptions = HttpClientOptions
+type HttpClientGetOptions = httpClientOptions
+type HttpClientPostOptions = httpClientWithBodyOptions
+type HttpClientPutOptions = httpClientWithBodyOptions
+type HttpClientDeleteOptions = httpClientOptions

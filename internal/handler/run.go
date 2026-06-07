@@ -11,7 +11,10 @@ func (h *handler) Run(ctx context.Context) error {
 	tokenExistAndValid, err := h.svc.CheckGitlabPersonalAccessTokenExistAndValid(
 		ctx,
 	)
-	tokenIsInvalid := errors.Is(err, apperrors.ErrInvalidGitlabPersonalToken)
+	tokenIsInvalid := errors.Is(
+		err,
+		apperrors.ErrInvalidGitlabPersonalAccessToken,
+	)
 
 	if err != nil && !tokenIsInvalid {
 		return fmt.Errorf(

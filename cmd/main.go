@@ -31,7 +31,7 @@ func main() {
 		httpClient,
 		cfg.Gitlab.GetGitlabAPIBaseURL(),
 	)
-	svc := service.NewService(logger, vaultRepo, repo)
+	svc := service.NewService(logger, cfg, vaultRepo, repo)
 	handler := handler.NewHandler(logger, svc, cfg.Gitlab.BaseURL)
 
 	ctx, cancel := context.WithCancel(context.Background())

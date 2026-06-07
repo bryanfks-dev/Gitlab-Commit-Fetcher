@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"main/core/config"
 	"main/infra/logger"
 	vaultrepository "main/infra/vault/repository"
 	"main/internal/repository"
@@ -9,6 +10,7 @@ import (
 
 type service struct {
 	logger    logger.Logger
+	cfg       *config.Config
 	vaultRepo vaultrepository.VaultRepository
 	repo      repository.Repository
 }
@@ -22,11 +24,13 @@ type Service interface {
 
 func NewService(
 	logger logger.Logger,
+	cfg *config.Config,
 	vaultRepo vaultrepository.VaultRepository,
 	repo repository.Repository,
 ) Service {
 	return &service{
 		logger:    logger,
+		cfg:       cfg,
 		vaultRepo: vaultRepo,
 		repo:      repo,
 	}
