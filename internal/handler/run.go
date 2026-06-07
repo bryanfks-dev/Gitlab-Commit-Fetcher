@@ -26,14 +26,6 @@ func (h *handler) Run(ctx context.Context) error {
 		} else {
 			h.logger.Printf("Gitlab personal token not found.")
 		}
-		personalAccessTokenURL := fmt.Sprintf(
-			"%s/-/user_settings/personal_access_tokens",
-			h.gitlabBaseURL,
-		)
-		h.logger.Guidef(
-			"Generate a new Gitlab personal access token within `%s` with `api`, `read_api`, `read_user`, and `read_repository` scopes checked.",
-			personalAccessTokenURL,
-		)
 		h.askAndSaveForGitlabPersonalAccessTokenUntilValid(ctx)
 	}
 

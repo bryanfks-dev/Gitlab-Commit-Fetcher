@@ -1,6 +1,8 @@
 package logger
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func (l *logger) Infof(format string, args ...any) {
 	if !l.showLog {
@@ -26,12 +28,21 @@ func (l *logger) Errorf(format string, args ...any) {
 	l.slog.Error(msg)
 }
 
+func (l *logger) Print(msg string) {
+	fmt.Print(msg)
+}
+
 func (l *logger) Printf(format string, args ...any) {
-	msg := fmt.Sprintf(format+"\n", args...)
+	msg := fmt.Sprintf(format, args...)
 	fmt.Println(msg)
 }
 
 func (l *logger) Guidef(format string, args ...any) {
-	msg := fmt.Sprintf("[GUIDE] "+format+"\n", args...)
+	msg := fmt.Sprintf("[GUIDE] "+format, args...)
+	fmt.Println(msg)
+}
+
+func (l *logger) Notef(format string, args ...any) {
+	msg := fmt.Sprintf("[NOTE] "+format, args...)
 	fmt.Println(msg)
 }
