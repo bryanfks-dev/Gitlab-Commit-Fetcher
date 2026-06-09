@@ -4,7 +4,7 @@ import "errors"
 
 var (
 	ErrInvalidGitlabPersonalAccessToken = errors.New(
-		"invalid Gitlab personal access token",
+		"Token is invalid",
 	)
 	ErrValidateGitlabPersonalAccessTokenFailed = errors.New(
 		"validate Gitlab personal access token failed",

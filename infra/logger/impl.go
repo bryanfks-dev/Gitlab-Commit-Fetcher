@@ -36,13 +36,3 @@ func (l *logger) Printf(format string, args ...any) {
 	msg := fmt.Sprintf(format, args...)
 	fmt.Println(msg)
 }
-
-func (l *logger) Guidef(format string, args ...any) {
-	msg := fmt.Sprintf("[GUIDE] "+format, args...)
-	fmt.Println(msg)
-}
-
-func (l *logger) Notef(format string, args ...any) {
-	msg := fmt.Sprintf("[NOTE] "+format, args...)
-	fmt.Println(msg)
-}

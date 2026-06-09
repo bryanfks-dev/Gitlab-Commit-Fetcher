@@ -16,8 +16,6 @@ type Logger interface {
 
 	Print(msg string)
 	Printf(msg string, args ...any)
-	Guidef(msg string, args ...any)
-	Notef(msg string, args ...any)
 }
 
 func NewLogger(distributionLog bool) Logger {
