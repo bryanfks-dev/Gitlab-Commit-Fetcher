@@ -64,6 +64,7 @@ func (vm LoginViewModel) Update(msg tea.Msg) (LoginViewModel, tea.Cmd) {
 }
 
 func (vm LoginViewModel) View() tea.View {
+	println("Rendering Login View")
 	retrievalGuide := logincomponent.GetTokenRetrievalGuide(vm.gitlabBaseURL)
 	info := logincomponent.GetInformation()
 	inputGuide := logincomponent.GetInputGuide()

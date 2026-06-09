@@ -35,7 +35,7 @@ func NewMainViewModel(
 }
 
 func (vm MainViewModel) Init() tea.Cmd {
-	return nil
+	return textinput.Blink
 }
 
 func (vm MainViewModel) Update(msg tea.Msg) (MainViewModel, tea.Cmd) {

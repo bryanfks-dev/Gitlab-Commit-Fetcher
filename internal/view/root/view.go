@@ -18,8 +18,6 @@ const (
 )
 
 type RootViewModel struct {
-	ctx     context.Context
-	svc     service.Service
 	loginVM loginview.LoginViewModel
 	mainVM  mainview.MainViewModel
 
@@ -32,21 +30,16 @@ func NewRootViewModel(
 	loginVM loginview.LoginViewModel,
 	mainVM mainview.MainViewModel,
 ) RootViewModel {
+	state := determineInitialRootState(ctx, svc)
 	return RootViewModel{
-		state:   rootStateLogin,
-		svc:     svc,
+		state:   state,
 		loginVM: loginVM,
 		mainVM:  mainVM,
 	}
 }
 
 func (vm RootViewModel) Init() tea.Cmd {
-	ok, err := vm.svc.CheckGitlabPersonalAccessTokenExistAndValid(vm.ctx)
-	if err != nil {
-		panic(err)
-	}
-
-	if !ok {
+	if vm.state == rootStateLogin {
 		return vm.loginVM.Init()
 	}
 	return vm.mainVM.Init()
