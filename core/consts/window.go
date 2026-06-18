@@ -1,5 +1,5 @@
 package consts
 
 const (
-	WindowWidth = 100
+	WindowMaxWidth = 120
 )

@@ -17,7 +17,7 @@ import (
 func (r *repository) ValidateGitlabPersonalAccessToken(
 	ctx context.Context,
 	token string,
-) (bool, error) {
+) error {
 	r.logger.Infof("Validating Gitlab personal access token")
 
 	url := fmt.Sprintf("%s/user", r.gitlabAPIBaseURL)
@@ -36,12 +36,12 @@ func (r *repository) ValidateGitlabPersonalAccessToken(
 			"Validating Gitlab personal access token failed: %v",
 			err,
 		)
-		return false, httpclienterrors.ErrSendRequestFailed
+		return httpclienterrors.ErrSendRequestFailed
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode == http.StatusUnauthorized {
-		return false, errors.ErrInvalidGitlabPersonalAccessToken
+		return errors.ErrInvalidGitLabPersonalAccessToken
 	}
 
 	if res.StatusCode != http.StatusOK {
@@ -49,9 +49,9 @@ func (r *repository) ValidateGitlabPersonalAccessToken(
 			"Unexpected status code when validating Gitlab personal access token: %d",
 			res.StatusCode,
 		)
-		return false, errors.ErrValidateGitlabPersonalAccessTokenFailed
+		return errors.ErrValidateGitLabPersonalAccessTokenFailed
 	}
-	return true, nil
+	return nil
 }
 
 func (r *repository) GetGitlabRefComparation(
@@ -86,7 +86,7 @@ func (r *repository) GetGitlabRefComparation(
 			"Getting Gitlab repository ref comparation failed: %v",
 			err,
 		)
-		return nil, errors.ErrGetGitlabRepositoryRefComparationFailed
+		return nil, errors.ErrGetGitLabRepositoryRefComparationFailed
 	}
 	defer res.Body.Close()
 
@@ -95,7 +95,7 @@ func (r *repository) GetGitlabRefComparation(
 			"Unexpected status code when getting Gitlab repository ref comparation: %d",
 			res.StatusCode,
 		)
-		return nil, errors.ErrGetGitlabRepositoryRefComparationFailed
+		return nil, errors.ErrGetGitLabRepositoryRefComparationFailed
 	}
 
 	var decodedRes response.GitlabRefComparationResponse
@@ -104,7 +104,7 @@ func (r *repository) GetGitlabRefComparation(
 			"Decoding Gitlab repository ref comparation response failed: %v",
 			err,
 		)
-		return nil, errors.ErrGetGitlabRepositoryRefComparationFailed
+		return nil, errors.ErrGetGitLabRepositoryRefComparationFailed
 	}
 	dto := mapper.MapGitlabRefComparationToRefComparationResultDTO(&decodedRes)
 	return dto, nil

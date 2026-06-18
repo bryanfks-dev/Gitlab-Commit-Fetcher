@@ -1,5 +1,7 @@
 dist/
+logs/
 .token
+gitlab-commit-fetcher.log
 
 .vscode/
 .idea/

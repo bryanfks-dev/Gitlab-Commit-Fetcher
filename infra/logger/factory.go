@@ -2,11 +2,11 @@ package logger
 
 import (
 	"log/slog"
+	"os"
 )
 
 type logger struct {
-	slog    *slog.Logger
-	showLog bool
+	slog *slog.Logger
 }
 
 type Logger interface {
@@ -18,11 +18,20 @@ type Logger interface {
 	Printf(msg string, args ...any)
 }
 
-func NewLogger(distributionLog bool) Logger {
+func NewLogger() Logger {
 	slogLogger := slog.Default()
+	logFilepath := newLoggerFilepath()
+	logFile, err := os.OpenFile(
+		logFilepath,
+		os.O_CREATE|os.O_WRONLY|os.O_APPEND,
+		0666,
+	)
+	if err != nil {
+		slogLogger.Error("Failed to open log file: " + err.Error())
+	}
+	slogLogger = slog.New(slog.NewJSONHandler(logFile, nil))
 
 	return &logger{
-		slog:    slogLogger,
-		showLog: !distributionLog,
+		slog: slogLogger,
 	}
 }

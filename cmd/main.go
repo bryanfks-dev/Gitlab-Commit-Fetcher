@@ -1,22 +1,21 @@
 package main
 
 import (
+	"bufio"
 	"context"
+	"fmt"
 	"main/di"
-	"main/infra/program"
-)
-
-var (
-	DistributionUse string = "false"
+	"os"
 )
 
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	cont := di.NewContainer(ctx, DistributionUse)
-	prog := program.NewProgram(cont.RootVM)
-	if err := prog.Start(); err != nil {
-		panic(err)
+	cont := di.NewContainer(ctx)
+	if err := cont.App.Run(); err != nil {
+		fmt.Printf("\nApplication exited with error: %v\n", err)
+		fmt.Print("Press Enter to exit... ")
+		bufio.NewReader(os.Stdin).ReadBytes('\n')
 	}
 }

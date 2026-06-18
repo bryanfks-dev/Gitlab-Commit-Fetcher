@@ -19,7 +19,7 @@ type Repository interface {
 	ValidateGitlabPersonalAccessToken(
 		ctx context.Context,
 		token string,
-	) (bool, error)
+	) error
 	GetGitlabRefComparation(
 		query *dto.GetGitlabRepositoryRefComparationQuery,
 	) (*dto.RefComparationResultDTO, error)

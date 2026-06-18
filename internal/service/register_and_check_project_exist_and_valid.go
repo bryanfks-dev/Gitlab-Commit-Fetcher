@@ -25,7 +25,7 @@ func (s *service) RegisterAndCheckProjectExistAndValid(
 
 	token, err := s.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)
 	if err != nil {
-		s.logger.Infof("GitLab personal access token does not exist in vault")
+		s.logger.Infof("Gitlab personal access token does not exist in vault")
 		return err
 	}
 

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"main/core/config"
+	"main/data/model"
 	"main/infra/logger"
 	vaultrepository "main/infra/vault/repository"
 	"main/internal/repository"
@@ -19,7 +20,12 @@ type Service interface {
 	SaveGitlabPersonalAccessToken(ctx context.Context, token string) error
 	CheckGitlabPersonalAccessTokenExistAndValid(
 		ctx context.Context,
-	) (bool, error)
+	) error
+	GetRegisteredGitlabProjects() []model.ProjectModel
+	RegisterAndCheckProjectExistAndValid(
+		ctx context.Context,
+		projectID int,
+	) error
 }
 
 func NewService(

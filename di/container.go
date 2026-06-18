@@ -3,16 +3,13 @@ package di
 import (
 	"context"
 	"main/core/config"
-	"main/core/utils"
 	httpclient "main/infra/http_client"
 	"main/infra/logger"
 	"main/infra/vault"
 	vaultrepository "main/infra/vault/repository"
+	"main/internal/delivery"
 	"main/internal/repository"
 	"main/internal/service"
-	loginview "main/internal/view/login"
-	mainview "main/internal/view/main"
-	rootview "main/internal/view/root"
 )
 
 type Container struct {
@@ -24,19 +21,14 @@ type Container struct {
 	VaultRepo  vaultrepository.VaultRepository
 	Repo       repository.Repository
 	Svc        service.Service
-	RootVM     rootview.RootViewModel
-	LoginVM    loginview.LoginViewModel
-	MainVM     mainview.MainViewModel
+	App        delivery.App
 }
 
 func NewContainer(
 	ctx context.Context,
-	distibutionUseEnabled string,
 ) *Container {
-	forDistributionUse := utils.ForDistributionUse(distibutionUseEnabled)
-
 	cfg := config.LoadFromYAMLFile()
-	logger := logger.NewLogger(forDistributionUse)
+	logger := logger.NewLogger()
 	vault := vault.NewVault("gitlab-commit-fetcher")
 	httpClient := httpclient.NewHttpClient()
 
@@ -47,10 +39,7 @@ func NewContainer(
 		cfg.Gitlab.GetGitlabAPIBaseURL(),
 	)
 	svc := service.NewService(logger, cfg, vaultRepo, repo)
-
-	loginVM := loginview.NewLoginViewModel(ctx, cfg.Gitlab.BaseURL, svc)
-	mainVM := mainview.NewMainViewModel(ctx, svc)
-	rootVM := rootview.NewRootViewModel(ctx, svc, loginVM, mainVM)
+	app := delivery.NewApp(ctx, svc, cfg)
 
 	return &Container{
 		Ctx:        ctx,
@@ -61,8 +50,6 @@ func NewContainer(
 		VaultRepo:  vaultRepo,
 		Repo:       repo,
 		Svc:        svc,
-		RootVM:     rootVM,
-		LoginVM:    loginVM,
-		MainVM:     mainVM,
+		App:        app,
 	}
 }

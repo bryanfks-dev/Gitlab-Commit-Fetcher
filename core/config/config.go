@@ -9,7 +9,9 @@ func (c *Config) RegisterProject(projectCfg ProjectConfig) error {
 	if c.CheckProjectExists(projectCfg.ID) {
 		return nil
 	}
-	c.RegisteredProjects = append(c.RegisteredProjects, projectCfg)
+	var projects []ProjectConfig
+	projects = append(projects, projectCfg)
+	projects = append(projects, c.RegisteredProjects...)
 	return writeConfigToYAMLFile(c)
 }
 
