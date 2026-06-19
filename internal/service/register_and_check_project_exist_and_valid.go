@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"main/core/config"
 	"main/core/errors"
+	"main/data/mapper"
 	vaultconsts "main/infra/vault/consts"
 )
 
@@ -40,11 +40,8 @@ func (s *service) RegisterAndCheckProjectExistAndValid(
 		return errors.ErrProjectNotFound
 	}
 
-	projectCfg := config.ProjectConfig{
-		ID:   project.ID,
-		Name: project.Name,
-	}
-	if err := s.cfg.RegisterProject(projectCfg); err != nil {
+	projectCfg := mapper.MapProjectModelToProjectConfig(project)
+	if err := s.cfg.RegisterProject(*projectCfg); err != nil {
 		s.logger.Errorf(
 			"Failed to register project with ID %d: %v",
 			projectID,

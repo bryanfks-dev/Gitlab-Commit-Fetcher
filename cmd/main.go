@@ -1,11 +1,14 @@
 package main
 
 import (
-	"bufio"
 	"context"
-	"fmt"
 	"main/di"
-	"os"
+	"main/internal/delivery"
+	addprojectview "main/internal/delivery/view/add_project"
+	loginview "main/internal/delivery/view/login"
+	projectlistview "main/internal/delivery/view/project_list"
+	sharedview "main/internal/delivery/view/shared"
+	validatingtokenview "main/internal/delivery/view/validating_token"
 )
 
 func main() {
@@ -13,9 +16,28 @@ func main() {
 	defer cancel()
 
 	cont := di.NewContainer(ctx)
-	if err := cont.App.Run(); err != nil {
-		fmt.Printf("\nApplication exited with error: %v\n", err)
-		fmt.Print("Press Enter to exit... ")
-		bufio.NewReader(os.Stdin).ReadBytes('\n')
-	}
+	app := cont.App
+
+	sharedView := sharedview.NewSharedView(ctx, cont.Svc)
+	validatingTokenView := validatingtokenview.NewValidatingTokenView(
+		ctx,
+		cont.Svc,
+	)
+	loginView := loginview.NewLoginView(ctx, cont.Svc, cont.Cfg.Gitlab.BaseURL)
+	projectListView := projectlistview.NewProjectListView(
+		ctx,
+		cont.Svc,
+		sharedView,
+	)
+	addProjectView := addprojectview.NewAddProjectView(
+		ctx,
+		cont.Svc,
+		sharedView,
+	)
+
+	app.RegisterView(delivery.ViewStateValidatingToken, validatingTokenView)
+	app.RegisterView(delivery.ViewStateLogin, loginView)
+	app.RegisterView(delivery.ViewStateProjectList, projectListView)
+	app.RegisterView(delivery.ViewStateAddProject, addProjectView)
+	app.Run()
 }

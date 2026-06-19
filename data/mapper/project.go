@@ -1,6 +1,7 @@
 package mapper
 
 import (
+	"main/core/config"
 	"main/data/model"
 	"main/data/response"
 	"main/data/viewmodel"
@@ -24,4 +25,14 @@ func MapProjectModelToProjectViewModel(
 		projectModel.Name,
 		projectModel.WebURL,
 	)
+}
+
+func MapProjectModelToProjectConfig(
+	projectModel *model.ProjectModel,
+) *config.ProjectConfig {
+	return &config.ProjectConfig{
+		ID:     projectModel.ID,
+		Name:   projectModel.Name,
+		WebURL: projectModel.WebURL,
+	}
 }

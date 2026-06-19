@@ -26,7 +26,7 @@ func writeConfigToYAMLFile(cfg *Config) error {
 	}
 	filepath := fmt.Sprintf("%s/%s", exeDirpath, consts.ConfigYAMLFilename)
 
-	bytes, err := yaml.Marshal(cfg)
+	bytes, err := yaml.MarshalWithOptions(cfg, yaml.IndentSequence(true))
 	if err != nil {
 		return err
 	}

@@ -2,12 +2,13 @@ package loginview
 
 import (
 	"fmt"
+	"main/internal/delivery"
 	deliveryutils "main/internal/delivery/utils"
 
 	"github.com/rmasci/gopass"
 )
 
-func (v *loginView) Render() error {
+func (v *loginView) Render() (delivery.ViewState, error) {
 	generateTokenGuideMsg := v.newGenerateGitLabPersonalAccessTokenGuideMessage()
 
 	for {
@@ -26,16 +27,17 @@ func (v *loginView) Render() error {
 		fmt.Print("> ")
 		tokenBytes, err := gopass.GetPasswdMasked()
 		if err != nil {
-			return err
+			v.Reset()
+			return delivery.ViewStateLogin, err
 		}
 
-		token := string(tokenBytes)
-		if err := v.ValidateGitLabPersonalAccessToken(token); err != nil {
+		v.token = string(tokenBytes)
+		if err := v.ValidateGitLabPersonalAccessToken(v.token); err != nil {
 			v.err = err
 			continue
 		}
 
-		err = v.svc.SaveGitlabPersonalAccessToken(v.ctx, token)
+		err = v.svc.SaveGitlabPersonalAccessToken(v.ctx, v.token)
 		if err != nil {
 			v.err = err
 			continue
@@ -44,5 +46,6 @@ func (v *loginView) Render() error {
 		break
 	}
 
-	return nil
+	v.Reset()
+	return delivery.ViewStateProjectList, nil
 }

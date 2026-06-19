@@ -2,6 +2,7 @@ package projectlistview
 
 import (
 	"context"
+	"main/internal/delivery"
 	sharedview "main/internal/delivery/view/shared"
 	"main/internal/service"
 )
@@ -11,10 +12,13 @@ type projectListView struct {
 	svc    service.Service
 	shared sharedview.SharedView
 	err    error
+
+	selectedOption string
 }
 
 type ProjectListView interface {
-	Render() error
+	Render() (delivery.ViewState, error)
+	Reset()
 }
 
 func NewProjectListView(

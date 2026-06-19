@@ -7,7 +7,8 @@ const (
 	ViewStateProjectList
 	ViewStateValidatingToken
 	ViewStateAddProject
-	ViewStateAddingProject
+	ViewStateDeleteProject
 	ViewStateInputRefComparation
 	ViewStateCommitList
+	ViewStateExit
 )

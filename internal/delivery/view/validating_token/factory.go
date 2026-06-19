@@ -2,6 +2,7 @@ package validatingtokenview
 
 import (
 	"context"
+	"main/internal/delivery"
 	"main/internal/service"
 )
 
@@ -11,7 +12,8 @@ type validatingTokenView struct {
 }
 
 type ValidatingTokenView interface {
-	Render() error
+	Render() (delivery.ViewState, error)
+	Reset()
 }
 
 func NewValidatingTokenView(

@@ -12,6 +12,7 @@ func (c *Config) RegisterProject(projectCfg ProjectConfig) error {
 	var projects []ProjectConfig
 	projects = append(projects, projectCfg)
 	projects = append(projects, c.RegisteredProjects...)
+	c.RegisteredProjects = projects
 	return writeConfigToYAMLFile(c)
 }
 

@@ -3,15 +3,15 @@ package projectlistview
 import (
 	"bufio"
 	"fmt"
+	"main/internal/delivery"
 	deliveryutils "main/internal/delivery/utils"
 	"os"
 	"strings"
 )
 
-func (v *projectListView) Render() error {
+func (v *projectListView) Render() (delivery.ViewState, error) {
 	registeredProjectTable := v.shared.NewRegisteredProjectTable()
 	menus := v.newMenuOptions()
-	var input string
 
 	for {
 		deliveryutils.ClearScreen()
@@ -29,8 +29,8 @@ func (v *projectListView) Render() error {
 		fmt.Print("> ")
 		scanner := bufio.NewScanner(os.Stdin)
 		if scanner.Scan() {
-			input = scanner.Text()
-			if err := v.ValidateMenuOption(input); err != nil {
+			v.selectedOption = scanner.Text()
+			if err := v.ValidateMenuOption(v.selectedOption); err != nil {
 				v.err = err
 				continue
 			}
@@ -38,18 +38,7 @@ func (v *projectListView) Render() error {
 		}
 	}
 
-	v.handleMenuInput(input)
-	return nil
-}
-
-func (v *projectListView) handleMenuInput(input string) {
-	switch input {
-	case MenuOptionCharInput[MenuOptionAddNewProject]:
-	case MenuOptionCharInput[MenuOptionFetchProjectCommits]:
-	case MenuOptionCharInput[MenuOptionRemoveProject]:
-	case MenuOptionCharInput[MenuOptionQuit]:
-		os.Exit(0)
-	}
+	return v.handleMenuInput(v.selectedOption)
 }
 
 func (v *projectListView) newMenuOptions() string {

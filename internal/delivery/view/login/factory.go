@@ -2,6 +2,7 @@ package loginview
 
 import (
 	"context"
+	"main/internal/delivery"
 	"main/internal/service"
 )
 
@@ -10,10 +11,13 @@ type loginView struct {
 	svc           service.Service
 	gitlabBaseURL string
 	err           error
+
+	token string
 }
 
 type LoginView interface {
-	Render() error
+	Render() (delivery.ViewState, error)
+	Reset()
 }
 
 func NewLoginView(
