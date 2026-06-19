@@ -11,8 +11,8 @@ type addProjectView struct {
 	ctx    context.Context
 	svc    service.Service
 	shared sharedview.SharedView
-	err    error
 
+	err       error
 	projectID int
 }
 

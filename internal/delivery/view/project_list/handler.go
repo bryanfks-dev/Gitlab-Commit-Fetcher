@@ -14,8 +14,9 @@ func (v *projectListView) handleMenuInput(
 		return delivery.ViewStateCommitList, nil
 	case MenuOptionCharInput[MenuOptionRemoveProject]:
 		v.Reset()
-		return delivery.ViewStateDeleteProject, nil
+		return delivery.ViewStateRemoveProject, nil
 	case MenuOptionCharInput[MenuOptionQuit]:
+		v.Reset()
 		return delivery.ViewStateExit, nil
 	}
 	panic("Invalid input option")

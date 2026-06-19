@@ -11,8 +11,8 @@ type projectListView struct {
 	ctx    context.Context
 	svc    service.Service
 	shared sharedview.SharedView
-	err    error
 
+	err            error
 	selectedOption string
 }
 

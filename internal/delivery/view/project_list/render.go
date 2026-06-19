@@ -49,7 +49,7 @@ func (v *projectListView) newMenuOptions() string {
 		charToInput := MenuOptionCharInput[menuOption]
 		menuName := MenuOptionName[menuOption]
 		fmt.Fprintf(&menus, "  [%s] %s", charToInput, menuName)
-		if option != int(MenuOptionQuit) {
+		if menuOption != MenuOptionQuit {
 			menus.WriteString("\n")
 		}
 	}

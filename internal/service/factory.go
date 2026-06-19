@@ -26,6 +26,7 @@ type Service interface {
 		ctx context.Context,
 		projectID int,
 	) error
+	RemoveProject(ctx context.Context, projectID int) error
 }
 
 func NewService(

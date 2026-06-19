@@ -5,14 +5,18 @@ import (
 	"main/internal/service"
 )
 
-type SharedView struct {
+type sharedView struct {
 	ctx context.Context
 	svc service.Service
 }
 
+type SharedView interface {
+	NewRegisteredProjectTable() string
+	NewUsefulKeys() string
+}
+
 func NewSharedView(ctx context.Context, svc service.Service) SharedView {
-	return SharedView{
-		ctx: ctx,
+	return &sharedView{ctx: ctx,
 		svc: svc,
 	}
 }

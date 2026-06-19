@@ -20,7 +20,7 @@ func (s *service) RegisterAndCheckProjectExistAndValid(
 	// config first to avoid unnecessary API calls to GitLab
 	if s.cfg.CheckProjectExists(projectID) {
 		s.logger.Infof("Project with ID %d already exists in config", projectID)
-		return nil
+		return errors.ErrProjectAlreadyRegistered
 	}
 
 	token, err := s.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)

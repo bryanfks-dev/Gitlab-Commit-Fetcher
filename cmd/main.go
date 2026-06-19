@@ -7,6 +7,7 @@ import (
 	addprojectview "main/internal/delivery/view/add_project"
 	loginview "main/internal/delivery/view/login"
 	projectlistview "main/internal/delivery/view/project_list"
+	removeprojectview "main/internal/delivery/view/remove_project"
 	sharedview "main/internal/delivery/view/shared"
 	validatingtokenview "main/internal/delivery/view/validating_token"
 )
@@ -34,10 +35,16 @@ func main() {
 		cont.Svc,
 		sharedView,
 	)
+	removeProjectView := removeprojectview.NewRemoveProjectView(
+		ctx,
+		cont.Svc,
+		sharedView,
+	)
 
 	app.RegisterView(delivery.ViewStateValidatingToken, validatingTokenView)
 	app.RegisterView(delivery.ViewStateLogin, loginView)
 	app.RegisterView(delivery.ViewStateProjectList, projectListView)
 	app.RegisterView(delivery.ViewStateAddProject, addProjectView)
+	app.RegisterView(delivery.ViewStateRemoveProject, removeProjectView)
 	app.Run()
 }

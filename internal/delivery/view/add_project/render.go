@@ -6,6 +6,7 @@ import (
 	"main/core/consts"
 	"main/internal/delivery"
 	deliveryutils "main/internal/delivery/utils"
+	sharedviewconsts "main/internal/delivery/view/shared/consts"
 	"os"
 	"strconv"
 	"time"
@@ -21,6 +22,7 @@ func (v *addProjectView) Render() (delivery.ViewState, error) {
 		"Get project ID by visiting a project web URL, click three dots on the right side, then click `Copy project ID: xxx`.",
 		consts.WindowMaxWidth,
 	)
+	usefulKeys := v.shared.NewUsefulKeys()
 
 	for {
 		deliveryutils.ClearScreen()
@@ -37,6 +39,8 @@ func (v *addProjectView) Render() (delivery.ViewState, error) {
 			return nextState, nil
 		}
 
+		fmt.Println(usefulKeys)
+		fmt.Println()
 		fmt.Println("[GUIDE]")
 		fmt.Println(getProjectIDMsg)
 		fmt.Println()
@@ -46,12 +50,21 @@ func (v *addProjectView) Render() (delivery.ViewState, error) {
 			fmt.Println()
 		}
 
-		fmt.Println("Enter project ID:")
+		fmt.Println("Enter project ID to add:")
 		fmt.Print("> ")
 
 		scanner := bufio.NewScanner(os.Stdin)
 		if scanner.Scan() {
 			input = scanner.Text()
+			switch input {
+			case sharedviewconsts.UsefulKeyCharInput[sharedviewconsts.UsefulKeyBack]:
+				v.Reset()
+				return delivery.ViewStateProjectList, nil
+			case sharedviewconsts.UsefulKeyCharInput[sharedviewconsts.UsefulKeyQuit]:
+				v.Reset()
+				return delivery.ViewStateExit, nil
+			}
+
 			if err := v.ValidateProjectID(input); err != nil {
 				v.err = err
 				continue
@@ -75,10 +88,9 @@ func (v *addProjectView) renderRegisterGitLabProjectSpinner() (delivery.ViewStat
 	)
 	spin.Stop()
 
+	v.Reset()
 	if err != nil {
 		return delivery.ViewStateAddProject, err
 	}
-
-	v.Reset()
 	return delivery.ViewStateProjectList, nil
 }

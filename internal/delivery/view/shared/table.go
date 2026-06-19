@@ -6,7 +6,7 @@ import (
 	"github.com/alexeyco/simpletable"
 )
 
-func (v *SharedView) NewRegisteredProjectTable() string {
+func (v *sharedView) NewRegisteredProjectTable() string {
 	registeredProjects := v.getRegisteredProjects()
 
 	table := simpletable.New()

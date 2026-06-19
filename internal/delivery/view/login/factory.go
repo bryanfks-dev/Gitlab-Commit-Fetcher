@@ -10,8 +10,8 @@ type loginView struct {
 	ctx           context.Context
 	svc           service.Service
 	gitlabBaseURL string
-	err           error
 
+	err   error
 	token string
 }
 
