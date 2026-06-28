@@ -37,7 +37,7 @@ func (v *loginView) Render() (delivery.ViewState, error) {
 			continue
 		}
 
-		err = v.svc.SaveGitlabPersonalAccessToken(v.ctx, v.token)
+		err = v.uc.SaveGitlabPersonalAccessToken(v.ctx, v.token)
 		if err != nil {
 			v.err = err
 			continue

@@ -13,7 +13,7 @@ func (v *validatingTokenView) Render() (delivery.ViewState, error) {
 	spin := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
 	spin.Suffix = " Validating existing GitLab personal access token..."
 	spin.Start()
-	err := v.svc.CheckGitlabPersonalAccessTokenExistAndValid(v.ctx)
+	err := v.uc.CheckGitlabPersonalAccessTokenExistAndValid(v.ctx)
 	spin.Stop()
 
 	if err != nil {

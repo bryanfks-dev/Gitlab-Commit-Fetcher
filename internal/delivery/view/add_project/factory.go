@@ -4,12 +4,12 @@ import (
 	"context"
 	"main/internal/delivery"
 	sharedview "main/internal/delivery/view/shared"
-	"main/internal/service"
+	usecase "main/internal/use_case"
 )
 
 type addProjectView struct {
 	ctx    context.Context
-	svc    service.Service
+	uc     usecase.UseCase
 	shared sharedview.SharedView
 
 	err       error
@@ -23,12 +23,12 @@ type AddProjectView interface {
 
 func NewAddProjectView(
 	ctx context.Context,
-	svc service.Service,
+	uc usecase.UseCase,
 	shared sharedview.SharedView,
 ) AddProjectView {
 	return &addProjectView{
 		ctx:    ctx,
-		svc:    svc,
+		uc:     uc,
 		shared: shared,
 	}
 }

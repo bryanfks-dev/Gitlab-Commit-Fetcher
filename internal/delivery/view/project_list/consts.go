@@ -4,16 +4,16 @@ type MenuOption int
 
 const (
 	MenuOptionAddNewProject MenuOption = iota
-	MenuOptionFetchProjectCommits
+	MenuOptionFetchProjectCommitMessages
 	MenuOptionRemoveProject
 	MenuOptionQuit
 )
 
 var MenuOptionCharInput = map[MenuOption]string{
-	MenuOptionAddNewProject:       "1",
-	MenuOptionFetchProjectCommits: "2",
-	MenuOptionRemoveProject:       "3",
-	MenuOptionQuit:                "q",
+	MenuOptionAddNewProject:              "1",
+	MenuOptionFetchProjectCommitMessages: "2",
+	MenuOptionRemoveProject:              "3",
+	MenuOptionQuit:                       "q",
 }
 
 func (m MenuOption) MenuOptionCharInputs() []string {
@@ -25,8 +25,8 @@ func (m MenuOption) MenuOptionCharInputs() []string {
 }
 
 var MenuOptionName = map[MenuOption]string{
-	MenuOptionAddNewProject:       "Add a new project",
-	MenuOptionFetchProjectCommits: "Fetch commits for a project",
-	MenuOptionRemoveProject:       "Remove a project",
-	MenuOptionQuit:                "Quit",
+	MenuOptionAddNewProject:              "Add a new project",
+	MenuOptionFetchProjectCommitMessages: "Fetch commit messages for a project",
+	MenuOptionRemoveProject:              "Remove a project",
+	MenuOptionQuit:                       "Quit",
 }

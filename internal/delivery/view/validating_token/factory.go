@@ -3,12 +3,12 @@ package validatingtokenview
 import (
 	"context"
 	"main/internal/delivery"
-	"main/internal/service"
+	usecase "main/internal/use_case"
 )
 
 type validatingTokenView struct {
 	ctx context.Context
-	svc service.Service
+	uc  usecase.UseCase
 }
 
 type ValidatingTokenView interface {
@@ -18,10 +18,10 @@ type ValidatingTokenView interface {
 
 func NewValidatingTokenView(
 	ctx context.Context,
-	svc service.Service,
+	uc usecase.UseCase,
 ) ValidatingTokenView {
 	return &validatingTokenView{
 		ctx: ctx,
-		svc: svc,
+		uc:  uc,
 	}
 }

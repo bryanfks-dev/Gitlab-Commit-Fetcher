@@ -3,12 +3,12 @@ package loginview
 import (
 	"context"
 	"main/internal/delivery"
-	"main/internal/service"
+	usecase "main/internal/use_case"
 )
 
 type loginView struct {
 	ctx           context.Context
-	svc           service.Service
+	uc            usecase.UseCase
 	gitlabBaseURL string
 
 	err   error
@@ -22,12 +22,12 @@ type LoginView interface {
 
 func NewLoginView(
 	ctx context.Context,
-	svc service.Service,
+	uc usecase.UseCase,
 	gitlabBaseURL string,
 ) LoginView {
 	return &loginView{
 		ctx:           ctx,
-		svc:           svc,
+		uc:            uc,
 		gitlabBaseURL: gitlabBaseURL,
 	}
 }

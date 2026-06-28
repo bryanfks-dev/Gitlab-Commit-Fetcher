@@ -2,12 +2,12 @@ package sharedview
 
 import (
 	"context"
-	"main/internal/service"
+	usecase "main/internal/use_case"
 )
 
 type sharedView struct {
 	ctx context.Context
-	svc service.Service
+	uc  usecase.UseCase
 }
 
 type SharedView interface {
@@ -15,8 +15,9 @@ type SharedView interface {
 	NewUsefulKeys() string
 }
 
-func NewSharedView(ctx context.Context, svc service.Service) SharedView {
-	return &sharedView{ctx: ctx,
-		svc: svc,
+func NewSharedView(ctx context.Context, uc usecase.UseCase) SharedView {
+	return &sharedView{
+		ctx: ctx,
+		uc:  uc,
 	}
 }

@@ -1,10 +1,10 @@
-package service
+package usecase
 
 import "main/data/model"
 
-func (s *service) GetRegisteredGitlabProjects() []model.ProjectModel {
+func (uc *useCase) GetRegisteredGitlabProjects() []model.ProjectModel {
 	var projects []model.ProjectModel
-	for _, registeredProject := range s.cfg.RegisteredProjects {
+	for _, registeredProject := range uc.cfg.RegisteredProjects {
 		project := model.NewProjectModel(
 			registeredProject.ID,
 			registeredProject.Name,

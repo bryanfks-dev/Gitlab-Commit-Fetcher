@@ -1,4 +1,4 @@
-package repository
+package service
 
 import (
 	"context"
@@ -14,13 +14,13 @@ import (
 	"net/http"
 )
 
-func (r *repository) ValidateGitlabPersonalAccessToken(
+func (s *service) ValidateGitlabPersonalAccessToken(
 	ctx context.Context,
 	token string,
 ) error {
-	r.logger.Infof("Validating Gitlab personal access token")
+	s.logger.Infof("Validating Gitlab personal access token")
 
-	url := fmt.Sprintf("%s/user", r.gitlabAPIBaseURL)
+	url := fmt.Sprintf("%s/user", s.gitlabAPIBaseURL)
 	header := http.Header{
 		"PRIVATE-TOKEN": []string{token},
 	}
@@ -30,9 +30,9 @@ func (r *repository) ValidateGitlabPersonalAccessToken(
 		URL:    url,
 		Header: header,
 	}
-	res, err := r.httpClient.Get(&opts)
+	res, err := s.httpClient.Get(&opts)
 	if err != nil {
-		r.logger.Errorf(
+		s.logger.Errorf(
 			"Validating Gitlab personal access token failed: %v",
 			err,
 		)
@@ -45,7 +45,7 @@ func (r *repository) ValidateGitlabPersonalAccessToken(
 	}
 
 	if res.StatusCode != http.StatusOK {
-		r.logger.Warnf(
+		s.logger.Warnf(
 			"Unexpected status code when validating Gitlab personal access token: %d",
 			res.StatusCode,
 		)
@@ -54,10 +54,10 @@ func (r *repository) ValidateGitlabPersonalAccessToken(
 	return nil
 }
 
-func (r *repository) GetGitlabRefComparation(
+func (s *service) GetGitlabRefComparation(
 	query *dto.GetGitlabRepositoryRefComparationQuery,
 ) (*dto.RefComparationResultDTO, error) {
-	r.logger.Infof(
+	s.logger.Infof(
 		"Getting Gitlab repository with projectID `%d` tag comparation between `%s` and `%s`",
 		query.ProjectID,
 		query.LowerRef,
@@ -66,7 +66,7 @@ func (r *repository) GetGitlabRefComparation(
 
 	url := fmt.Sprintf(
 		"%s/projects/%d/repository/compare?from=%s&to=%s",
-		r.gitlabAPIBaseURL,
+		s.gitlabAPIBaseURL,
 		query.ProjectID,
 		query.LowerRef,
 		query.UpperRef,
@@ -80,9 +80,9 @@ func (r *repository) GetGitlabRefComparation(
 		URL:    url,
 		Header: header,
 	}
-	res, err := r.httpClient.Get(&opts)
+	res, err := s.httpClient.Get(&opts)
 	if err != nil {
-		r.logger.Errorf(
+		s.logger.Errorf(
 			"Getting Gitlab repository ref comparation failed: %v",
 			err,
 		)
@@ -91,7 +91,7 @@ func (r *repository) GetGitlabRefComparation(
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		r.logger.Warnf(
+		s.logger.Warnf(
 			"Unexpected status code when getting Gitlab repository ref comparation: %d",
 			res.StatusCode,
 		)
@@ -100,7 +100,7 @@ func (r *repository) GetGitlabRefComparation(
 
 	var decodedRes response.GitlabRefComparationResponse
 	if err := json.NewDecoder(res.Body).Decode(&decodedRes); err != nil {
-		r.logger.Errorf(
+		s.logger.Errorf(
 			"Decoding Gitlab repository ref comparation response failed: %v",
 			err,
 		)
@@ -110,14 +110,14 @@ func (r *repository) GetGitlabRefComparation(
 	return dto, nil
 }
 
-func (r *repository) GetGitlabProject(
+func (s *service) GetGitlabProject(
 	ctx context.Context,
 	projectID int,
 	token string,
 ) (*model.ProjectModel, error) {
-	r.logger.Infof("Getting Gitlab project")
+	s.logger.Infof("Getting Gitlab project")
 
-	url := fmt.Sprintf("%s/projects/%d", r.gitlabAPIBaseURL, projectID)
+	url := fmt.Sprintf("%s/projects/%d", s.gitlabAPIBaseURL, projectID)
 	header := http.Header{
 		"PRIVATE-TOKEN": []string{token},
 	}
@@ -127,20 +127,20 @@ func (r *repository) GetGitlabProject(
 		URL:    url,
 		Header: header,
 	}
-	res, err := r.httpClient.Get(&opts)
+	res, err := s.httpClient.Get(&opts)
 	if err != nil {
-		r.logger.Errorf("Getting Gitlab project failed: %v", err)
+		s.logger.Errorf("Getting Gitlab project failed: %v", err)
 		return nil, errors.ErrGetProjectFailed
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode == http.StatusNotFound {
-		r.logger.Warnf("Gitlab project with ID `%d` not found", projectID)
+		s.logger.Warnf("Gitlab project with ID `%d` not found", projectID)
 		return nil, nil
 	}
 
 	if res.StatusCode != http.StatusOK {
-		r.logger.Warnf(
+		s.logger.Warnf(
 			"Unexpected status code when getting Gitlab project: %d",
 			res.StatusCode,
 		)
@@ -149,7 +149,7 @@ func (r *repository) GetGitlabProject(
 
 	var decodedRes response.GitlabProjectResponse
 	if err := json.NewDecoder(res.Body).Decode(&decodedRes); err != nil {
-		r.logger.Errorf("Decoding Gitlab project response failed: %v", err)
+		s.logger.Errorf("Decoding Gitlab project response failed: %v", err)
 		return nil, errors.ErrGetProjectFailed
 	}
 	model := mapper.MapGitlabProjectToProjectModel(&decodedRes)

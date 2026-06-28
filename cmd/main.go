@@ -19,25 +19,25 @@ func main() {
 	cont := di.NewContainer(ctx)
 	app := cont.App
 
-	sharedView := sharedview.NewSharedView(ctx, cont.Svc)
+	sharedView := sharedview.NewSharedView(ctx, cont.UC)
 	validatingTokenView := validatingtokenview.NewValidatingTokenView(
 		ctx,
-		cont.Svc,
+		cont.UC,
 	)
-	loginView := loginview.NewLoginView(ctx, cont.Svc, cont.Cfg.Gitlab.BaseURL)
+	loginView := loginview.NewLoginView(ctx, cont.UC, cont.Cfg.Gitlab.BaseURL)
 	projectListView := projectlistview.NewProjectListView(
 		ctx,
-		cont.Svc,
+		cont.UC,
 		sharedView,
 	)
 	addProjectView := addprojectview.NewAddProjectView(
 		ctx,
-		cont.Svc,
+		cont.UC,
 		sharedView,
 	)
 	removeProjectView := removeprojectview.NewRemoveProjectView(
 		ctx,
-		cont.Svc,
+		cont.UC,
 		sharedView,
 	)
 

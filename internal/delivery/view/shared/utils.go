@@ -6,7 +6,7 @@ import (
 )
 
 func (v *sharedView) getRegisteredProjects() []viewmodel.ProjectViewModel {
-	models := v.svc.GetRegisteredGitlabProjects()
+	models := v.uc.GetRegisteredGitlabProjects()
 	viewmodels := make([]viewmodel.ProjectViewModel, 0)
 	for _, model := range models {
 		viewmodel := mapper.MapProjectModelToProjectViewModel(&model)

@@ -1,4 +1,4 @@
-package service
+package usecase
 
 import (
 	"context"
@@ -6,19 +6,19 @@ import (
 	vaultconsts "main/infra/vault/consts"
 )
 
-func (s *service) GetGitlabRepositoryCommitMessages(
+func (uc *useCase) GetGitlabRepositoryCommitMessages(
 	ctx context.Context,
 	projectID int,
 	lowerRef string,
 	upperRef string,
 ) ([]string, error) {
-	s.logger.Infof(
+	uc.logger.Infof(
 		"Getting Gitlab repository commit messages from %s to %s",
 		lowerRef,
 		upperRef,
 	)
 
-	token, err := s.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)
+	token, err := uc.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)
 	if err != nil {
 		return []string{}, err
 	}
@@ -31,7 +31,7 @@ func (s *service) GetGitlabRepositoryCommitMessages(
 		LowerRef:  lowerRef,
 		UpperRef:  upperRef,
 	}
-	res, err := s.repo.GetGitlabRefComparation(&query)
+	res, err := uc.svc.GetGitlabRefComparation(&query)
 	if err != nil {
 		return []string{}, err
 	}

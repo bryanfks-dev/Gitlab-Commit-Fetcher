@@ -1,0 +1,9 @@
+package projectcommitmessagesview
+
+type projectCommitMessagesState int
+
+const (
+	projectCommitMessagesStateInputRefComprations projectCommitMessagesState = iota
+	projectCommitMessagesStateLoading
+	projectCommitMessagesStateDisplayCommitMessages
+)

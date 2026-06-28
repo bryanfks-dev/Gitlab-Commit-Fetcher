@@ -9,9 +9,9 @@ func (v *projectListView) handleMenuInput(
 	case MenuOptionCharInput[MenuOptionAddNewProject]:
 		v.Reset()
 		return delivery.ViewStateAddProject, nil
-	case MenuOptionCharInput[MenuOptionFetchProjectCommits]:
+	case MenuOptionCharInput[MenuOptionFetchProjectCommitMessages]:
 		v.Reset()
-		return delivery.ViewStateCommitList, nil
+		return delivery.ViewStateProjectCommits, nil
 	case MenuOptionCharInput[MenuOptionRemoveProject]:
 		v.Reset()
 		return delivery.ViewStateRemoveProject, nil

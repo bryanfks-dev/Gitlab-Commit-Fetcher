@@ -4,12 +4,12 @@ import (
 	"context"
 	"main/internal/delivery"
 	sharedview "main/internal/delivery/view/shared"
-	"main/internal/service"
+	usecase "main/internal/use_case"
 )
 
 type removeProjectView struct {
 	ctx    context.Context
-	svc    service.Service
+	uc     usecase.UseCase
 	shared sharedview.SharedView
 
 	err       error
@@ -23,12 +23,12 @@ type RemoveProjectView interface {
 
 func NewRemoveProjectView(
 	ctx context.Context,
-	svc service.Service,
+	uc usecase.UseCase,
 	shared sharedview.SharedView,
 ) RemoveProjectView {
 	return &removeProjectView{
 		ctx:    ctx,
-		svc:    svc,
+		uc:     uc,
 		shared: shared,
 	}
 }

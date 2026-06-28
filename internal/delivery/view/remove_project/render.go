@@ -73,7 +73,7 @@ func (v *removeProjectView) renderRemoveGitLabProjectSpinner() (delivery.ViewSta
 	spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	spin.Suffix = " Removing GitLab project..."
 	spin.Start()
-	err := v.svc.RemoveProject(v.ctx, v.projectID)
+	err := v.uc.RemoveProject(v.ctx, v.projectID)
 	spin.Stop()
 
 	v.Reset()

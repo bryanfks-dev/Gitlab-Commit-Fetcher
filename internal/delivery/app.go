@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"main/core/config"
 	deliveryutils "main/internal/delivery/utils"
-	"main/internal/service"
+	usecase "main/internal/use_case"
 	"os"
 )
 
 type app struct {
 	ctx context.Context
-	svc service.Service
+	uc  usecase.UseCase
 	cfg *config.Config
 
 	views        map[ViewState]View
@@ -25,10 +25,10 @@ type App interface {
 	Run()
 }
 
-func NewApp(ctx context.Context, svc service.Service, cfg *config.Config) App {
+func NewApp(ctx context.Context, uc usecase.UseCase, cfg *config.Config) App {
 	return &app{
 		ctx:          ctx,
-		svc:          svc,
+		uc:           uc,
 		cfg:          cfg,
 		currentState: ViewStateValidatingToken,
 	}

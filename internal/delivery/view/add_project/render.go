@@ -82,7 +82,7 @@ func (v *addProjectView) renderRegisterGitLabProjectSpinner() (delivery.ViewStat
 	spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	spin.Suffix = " Registering GitLab project..."
 	spin.Start()
-	err := v.svc.RegisterAndCheckProjectExistAndValid(
+	err := v.uc.RegisterAndCheckProjectExistAndValid(
 		v.ctx,
 		v.projectID,
 	)

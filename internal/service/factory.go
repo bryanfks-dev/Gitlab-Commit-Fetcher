@@ -2,43 +2,42 @@ package service
 
 import (
 	"context"
-	"main/core/config"
+	"main/data/dto"
 	"main/data/model"
+	httpclient "main/infra/http_client"
 	"main/infra/logger"
-	vaultrepository "main/infra/vault/repository"
-	"main/internal/repository"
 )
 
 type service struct {
-	logger    logger.Logger
-	cfg       *config.Config
-	vaultRepo vaultrepository.VaultRepository
-	repo      repository.Repository
+	logger     logger.Logger
+	httpClient httpclient.HttpClient
+
+	gitlabAPIBaseURL string
 }
 
 type Service interface {
-	SaveGitlabPersonalAccessToken(ctx context.Context, token string) error
-	CheckGitlabPersonalAccessTokenExistAndValid(
+	ValidateGitlabPersonalAccessToken(
 		ctx context.Context,
+		token string,
 	) error
-	GetRegisteredGitlabProjects() []model.ProjectModel
-	RegisterAndCheckProjectExistAndValid(
+	GetGitlabRefComparation(
+		query *dto.GetGitlabRepositoryRefComparationQuery,
+	) (*dto.RefComparationResultDTO, error)
+	GetGitlabProject(
 		ctx context.Context,
 		projectID int,
-	) error
-	RemoveProject(ctx context.Context, projectID int) error
+		token string,
+	) (*model.ProjectModel, error)
 }
 
 func NewService(
 	logger logger.Logger,
-	cfg *config.Config,
-	vaultRepo vaultrepository.VaultRepository,
-	repo repository.Repository,
+	httpClient httpclient.HttpClient,
+	gitlabAPIBaseURL string,
 ) Service {
 	return &service{
-		logger:    logger,
-		cfg:       cfg,
-		vaultRepo: vaultRepo,
-		repo:      repo,
+		logger:           logger,
+		httpClient:       httpClient,
+		gitlabAPIBaseURL: gitlabAPIBaseURL,
 	}
 }

@@ -8,8 +8,8 @@ import (
 	"main/infra/vault"
 	vaultrepository "main/infra/vault/repository"
 	"main/internal/delivery"
-	"main/internal/repository"
 	"main/internal/service"
+	usecase "main/internal/use_case"
 )
 
 type Container struct {
@@ -19,7 +19,7 @@ type Container struct {
 	Vault      *vault.Vault
 	HttpClient httpclient.HttpClient
 	VaultRepo  vaultrepository.VaultRepository
-	Repo       repository.Repository
+	UC         usecase.UseCase
 	Svc        service.Service
 	App        delivery.App
 }
@@ -33,13 +33,13 @@ func NewContainer(
 	httpClient := httpclient.NewHttpClient()
 
 	vaultRepo := vaultrepository.NewVaultRepository(logger, vault)
-	repo := repository.NewRepository(
+	svc := service.NewService(
 		logger,
 		httpClient,
 		cfg.Gitlab.GetGitlabAPIBaseURL(),
 	)
-	svc := service.NewService(logger, cfg, vaultRepo, repo)
-	app := delivery.NewApp(ctx, svc, cfg)
+	uc := usecase.NewUseCase(logger, cfg, vaultRepo, svc)
+	app := delivery.NewApp(ctx, uc, cfg)
 
 	return &Container{
 		Ctx:        ctx,
@@ -48,7 +48,7 @@ func NewContainer(
 		Vault:      vault,
 		HttpClient: httpClient,
 		VaultRepo:  vaultRepo,
-		Repo:       repo,
+		UC:         uc,
 		Svc:        svc,
 		App:        app,
 	}
