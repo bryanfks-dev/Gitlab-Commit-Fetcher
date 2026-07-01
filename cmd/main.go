@@ -6,6 +6,7 @@ import (
 	"main/internal/delivery"
 	addprojectview "main/internal/delivery/view/add_project"
 	loginview "main/internal/delivery/view/login"
+	projectcommitmessagesview "main/internal/delivery/view/project_commit_messages"
 	projectlistview "main/internal/delivery/view/project_list"
 	removeprojectview "main/internal/delivery/view/remove_project"
 	sharedview "main/internal/delivery/view/shared"
@@ -40,11 +41,20 @@ func main() {
 		cont.UC,
 		sharedView,
 	)
-
+	projectCommitMessagesView := projectcommitmessagesview.NewProjectCommitMessagesView(
+		ctx,
+		cont.Svc,
+		cont.UC,
+		sharedView,
+	)
 	app.RegisterView(delivery.ViewStateValidatingToken, validatingTokenView)
 	app.RegisterView(delivery.ViewStateLogin, loginView)
 	app.RegisterView(delivery.ViewStateProjectList, projectListView)
 	app.RegisterView(delivery.ViewStateAddProject, addProjectView)
 	app.RegisterView(delivery.ViewStateRemoveProject, removeProjectView)
+	app.RegisterView(
+		delivery.ViewStateProjectCommits,
+		projectCommitMessagesView,
+	)
 	app.Run()
 }

@@ -8,8 +8,10 @@ import (
 func MapGitlabCommitToCommitModel(
 	gitlabCommit *response.GitlabCommitResponse,
 ) *model.CommitModel {
-	return &model.CommitModel{
-		ID:      gitlabCommit.ID,
-		Message: gitlabCommit.Message,
-	}
+	return model.NewCommitModel(
+		gitlabCommit.ID,
+		gitlabCommit.Message,
+		gitlabCommit.AuthorName,
+		gitlabCommit.ParentIds,
+	)
 }

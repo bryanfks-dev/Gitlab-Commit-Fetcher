@@ -10,6 +10,7 @@ func (uc *useCase) CheckGitlabPersonalAccessTokenExistAndValid(
 	ctx context.Context,
 ) error {
 	uc.logger.Infof("Checking if GitLab personal access token exists in vault")
+
 	token, err := uc.vaultRepo.Get(vaultconsts.GitlabPersonalTokenKey)
 	if err != nil {
 		return err

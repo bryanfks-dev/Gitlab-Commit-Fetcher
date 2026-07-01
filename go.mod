@@ -11,6 +11,7 @@ require (
 	github.com/mitchellh/go-wordwrap v1.0.1
 	github.com/rmasci/gopass v0.0.1
 	github.com/zalando/go-keyring v0.2.8
+	golang.design/x/clipboard v0.8.0
 )
 
 require (
@@ -19,6 +20,7 @@ require (
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
 	github.com/danieljoos/wincred v1.2.3 // indirect
 	github.com/dave/dst v0.27.3 // indirect
+	github.com/ebitengine/purego v0.10.1 // indirect
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
@@ -33,7 +35,11 @@ require (
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2 // indirect
 	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
+	golang.design/x/x11 v0.2.0 // indirect
 	golang.org/x/crypto v0.41.0 // indirect
+	golang.org/x/exp/shiny v0.0.0-20250606033433-dcc06ee1d476 // indirect
+	golang.org/x/image v0.28.0 // indirect
+	golang.org/x/mobile v0.0.0-20250606033058-a2a15c67f36f // indirect
 	golang.org/x/mod v0.27.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/sys v0.46.0 // indirect

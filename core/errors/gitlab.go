@@ -10,9 +10,12 @@ var (
 		"GitLab token is invalid",
 	)
 	ErrValidateGitLabPersonalAccessTokenFailed = errors.New(
-		"validate Gitlab personal access token failed",
+		"Validate GitLab personal access token failed",
+	)
+	ErrInvalidGitLabRefComparation = errors.New(
+		"GitLab ref comparation is invalid",
 	)
 	ErrGetGitLabRepositoryRefComparationFailed = errors.New(
-		"get gitlab repository ref comparation failed",
+		"Get GitLab repository ref comparation failed",
 	)
 )

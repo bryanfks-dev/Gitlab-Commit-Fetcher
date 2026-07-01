@@ -16,10 +16,7 @@ type service struct {
 }
 
 type Service interface {
-	ValidateGitlabPersonalAccessToken(
-		ctx context.Context,
-		token string,
-	) error
+	ValidateGitlabPersonalAccessToken(ctx context.Context, token string) error
 	GetGitlabRefComparation(
 		query *dto.GetGitlabRepositoryRefComparationQuery,
 	) (*dto.RefComparationResultDTO, error)
@@ -28,6 +25,8 @@ type Service interface {
 		projectID int,
 		token string,
 	) (*model.ProjectModel, error)
+
+	CopyTextToClipboard(ctx context.Context, text string)
 }
 
 func NewService(

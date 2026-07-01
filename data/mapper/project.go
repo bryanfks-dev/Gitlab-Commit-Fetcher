@@ -30,9 +30,19 @@ func MapProjectModelToProjectViewModel(
 func MapProjectModelToProjectConfig(
 	projectModel *model.ProjectModel,
 ) *config.ProjectConfig {
-	return &config.ProjectConfig{
-		ID:     projectModel.ID,
-		Name:   projectModel.Name,
-		WebURL: projectModel.WebURL,
-	}
+	return config.NewProjectConfig(
+		projectModel.ID,
+		projectModel.Name,
+		projectModel.WebURL,
+	)
+}
+
+func MapProjectConfigToProjectModel(
+	projectConfig *config.ProjectConfig,
+) *model.ProjectModel {
+	return model.NewProjectModel(
+		projectConfig.ID,
+		projectConfig.Name,
+		projectConfig.WebURL,
+	)
 }

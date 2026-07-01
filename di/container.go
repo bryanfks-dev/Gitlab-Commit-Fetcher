@@ -8,8 +8,11 @@ import (
 	"main/infra/vault"
 	vaultrepository "main/infra/vault/repository"
 	"main/internal/delivery"
+	"main/internal/repository"
 	"main/internal/service"
 	usecase "main/internal/use_case"
+
+	"golang.design/x/clipboard"
 )
 
 type Container struct {
@@ -21,12 +24,17 @@ type Container struct {
 	VaultRepo  vaultrepository.VaultRepository
 	UC         usecase.UseCase
 	Svc        service.Service
+	Repo       repository.Repository
 	App        delivery.App
 }
 
 func NewContainer(
 	ctx context.Context,
 ) *Container {
+	if err := clipboard.Init(); err != nil {
+		panic(err)
+	}
+
 	cfg := config.LoadFromYAMLFile()
 	logger := logger.NewLogger()
 	vault := vault.NewVault("gitlab-commit-fetcher")
@@ -38,7 +46,8 @@ func NewContainer(
 		httpClient,
 		cfg.Gitlab.GetGitlabAPIBaseURL(),
 	)
-	uc := usecase.NewUseCase(logger, cfg, vaultRepo, svc)
+	repo := repository.NewRepository(logger)
+	uc := usecase.NewUseCase(logger, cfg, vaultRepo, svc, repo)
 	app := delivery.NewApp(ctx, uc, cfg)
 
 	return &Container{
@@ -50,6 +59,7 @@ func NewContainer(
 		VaultRepo:  vaultRepo,
 		UC:         uc,
 		Svc:        svc,
+		Repo:       repo,
 		App:        app,
 	}
 }

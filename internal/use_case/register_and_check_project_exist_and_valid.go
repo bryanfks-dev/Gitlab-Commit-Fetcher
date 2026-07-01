@@ -19,7 +19,10 @@ func (uc *useCase) RegisterAndCheckProjectExistAndValid(
 	// IDK, this is not always be valid, but checking if project exists in
 	// config first to avoid unnecessary API calls to GitLab
 	if uc.cfg.CheckProjectExists(projectID) {
-		uc.logger.Infof("Project with ID %d already exists in config", projectID)
+		uc.logger.Infof(
+			"Project with ID %d already exists in config",
+			projectID,
+		)
 		return errors.ErrProjectAlreadyRegistered
 	}
 

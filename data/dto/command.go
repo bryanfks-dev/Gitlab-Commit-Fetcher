@@ -1,11 +1,10 @@
 package dto
 
-import "context"
-
-type GetGitlabRepositoryRefComparationQuery struct {
-	Ctx       context.Context
-	ProjectID int
-	LowerRef  string
-	UpperRef  string
-	Token     string
+type WriteCommitMessageToFileCommand struct {
+	LowerRef string
+	UpperRef string
+	Filename string
+	Messages []string
+	Prefix   *string
+	Suffix   *string
 }

@@ -90,6 +90,13 @@ func (s *service) GetGitlabRefComparation(
 	}
 	defer res.Body.Close()
 
+	if res.StatusCode == http.StatusNotFound {
+		s.logger.Warnf(
+			"Gitlab repository with projectID `%d` not found",
+			query.ProjectID,
+		)
+		return nil, errors.ErrInvalidGitLabRefComparation
+	}
 	if res.StatusCode != http.StatusOK {
 		s.logger.Warnf(
 			"Unexpected status code when getting Gitlab repository ref comparation: %d",

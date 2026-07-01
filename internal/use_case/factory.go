@@ -6,6 +6,7 @@ import (
 	"main/data/model"
 	"main/infra/logger"
 	vaultrepository "main/infra/vault/repository"
+	"main/internal/repository"
 	"main/internal/service"
 )
 
@@ -14,6 +15,7 @@ type useCase struct {
 	cfg       *config.Config
 	vaultRepo vaultrepository.VaultRepository
 	svc       service.Service
+	repo      repository.Repository
 }
 
 type UseCase interface {
@@ -27,6 +29,13 @@ type UseCase interface {
 		projectID int,
 	) error
 	RemoveProject(ctx context.Context, projectID int) error
+	GetGitlabRepositoryCommitMessages(
+		ctx context.Context,
+		projectID int,
+		lowerRef string,
+		upperRef string,
+	) (string, []string, error)
+	GetRegisteredGitlabProject(projectID int) (*model.ProjectModel, error)
 }
 
 func NewUseCase(
@@ -34,11 +43,13 @@ func NewUseCase(
 	cfg *config.Config,
 	vaultRepo vaultrepository.VaultRepository,
 	svc service.Service,
+	repo repository.Repository,
 ) UseCase {
 	return &useCase{
 		logger:    logger,
 		cfg:       cfg,
 		vaultRepo: vaultRepo,
 		svc:       svc,
+		repo:      repo,
 	}
 }

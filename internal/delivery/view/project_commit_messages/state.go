@@ -3,7 +3,8 @@ package projectcommitmessagesview
 type projectCommitMessagesState int
 
 const (
-	projectCommitMessagesStateInputRefComprations projectCommitMessagesState = iota
+	projectCommitMessagesStateInputProjectID projectCommitMessagesState = iota
+	projectCommitMessagesStateInputRefComprations
 	projectCommitMessagesStateLoading
 	projectCommitMessagesStateDisplayCommitMessages
 )

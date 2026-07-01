@@ -10,6 +10,7 @@ func (uc *useCase) SaveGitlabPersonalAccessToken(
 	token string,
 ) error {
 	uc.logger.Infof("Setting GitLab personal access token in vault")
+
 	tokenByte := []byte(token)
 	err := uc.svc.ValidateGitlabPersonalAccessToken(ctx, token)
 	if err != nil {

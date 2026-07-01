@@ -3,6 +3,7 @@ package logger
 import (
 	"log/slog"
 	"os"
+	"strings"
 )
 
 type logger struct {
@@ -21,6 +22,15 @@ type Logger interface {
 func NewLogger() Logger {
 	slogLogger := slog.Default()
 	logFilepath := newLoggerFilepath()
+
+	parts := strings.Split(logFilepath, "/")
+	if len(parts) > 1 {
+		dir := strings.Join(parts[:len(parts)-1], "/")
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			panic("Failed to create log directory: " + err.Error())
+		}
+	}
+
 	logFile, err := os.OpenFile(
 		logFilepath,
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND,
