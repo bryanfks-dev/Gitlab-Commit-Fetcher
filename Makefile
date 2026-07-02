@@ -59,7 +59,7 @@ compile-macos: compile-macos-amd64 compile-macos-arm64
 compile-windows-amd64: install
 	GOOS=windows GOARCH=amd64 \
 		go build \
-			-o $(OUTPUT_FILEPATH)-macos-amd64.exe \
+			-o $(OUTPUT_FILEPATH)-windows-amd64.exe \
 			$(GO_MAIN_FILEPATH)
 
 compile-windows-arm64: install

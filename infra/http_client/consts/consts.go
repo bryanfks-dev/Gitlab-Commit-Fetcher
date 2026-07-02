@@ -1,5 +1,5 @@
 package httpclientconsts
 
 const (
-	HttpClientDefaultTimeoutInSeconds = 10
+	HttpClientDefaultTimeoutInSeconds = 120
 )

@@ -43,7 +43,6 @@ func (r *repository) WriteCommitMessageToFile(
 	}
 
 	msgWithNewLine := strings.Join(msgs, "\n")
-	r.logger.Infof(msgWithNewLine)
 	content := []byte(msgWithNewLine)
 	if err := os.WriteFile(filepath, content, 0644); err != nil {
 		r.logger.Errorf("failed to write commit messages to file: %v", err)
