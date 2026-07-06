@@ -27,7 +27,12 @@ func NewCommitModel(
 }
 
 func (m *CommitModel) IsMergeCommit() bool {
-	return len(m.CommitParentIDs) > 1
+	return len(m.CommitParentIDs) > 1 ||
+		strings.HasPrefix(strings.ToLower(m.Message), "merge")
+}
+
+func (m *CommitModel) IsRevertCommit() bool {
+	return strings.HasPrefix(strings.ToLower(m.Message), "revert")
 }
 
 func (m *CommitModel) GetMessages() []string {

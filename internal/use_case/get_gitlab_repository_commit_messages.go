@@ -48,7 +48,7 @@ func (uc *useCase) GetGitlabRepositoryCommitMessages(
 
 	commitMsgs := datastructures.NewSet[string]()
 	for _, commit := range res.Commits {
-		if commit.IsMergeCommit() {
+		if commit.IsMergeCommit() || commit.IsRevertCommit() {
 			continue
 		}
 		for _, msg := range commit.GetMessages() {
