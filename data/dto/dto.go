@@ -12,7 +12,6 @@ type GetGitlabRepositoryCommitMessagesDTO struct {
 	UpperRef  string
 }
 
-
 type RefComparationResultDTO struct {
 	ComparingSameRef bool
 	Commits          []model.CommitModel

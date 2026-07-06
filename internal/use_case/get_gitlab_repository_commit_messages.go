@@ -72,7 +72,9 @@ func (uc *useCase) GetGitlabRepositoryCommitMessages(
 	return filenameSuffix, commitMsgSlice, nil
 }
 
-func (uc *useCase) writeCommitMessagesToFile(options WriteCommitMessagesToFileOptions) error {
+func (uc *useCase) writeCommitMessagesToFile(
+	options WriteCommitMessagesToFileOptions,
+) error {
 	msgPrefix := "-"
 	cmd := dto.WriteCommitMessageToFileCommand{
 		Filename: options.Filename,

@@ -7,13 +7,12 @@ import (
 )
 
 func (h *httpClient) Get(opts *HttpClientGetOptions) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(
+	req, err := http.NewRequestWithContext(
 		opts.Ctx,
-		opts.TimeoutInSeconds,
+		http.MethodGet,
+		opts.URL,
+		nil,
 	)
-	defer cancel()
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, opts.URL, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -23,15 +22,9 @@ func (h *httpClient) Get(opts *HttpClientGetOptions) (*http.Response, error) {
 }
 
 func (h *httpClient) Post(opts *HttpClientPostOptions) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(
-		opts.Ctx,
-		opts.TimeoutInSeconds,
-	)
-	defer cancel()
-
 	bodyBytes := io.NopCloser(bytes.NewReader(opts.Body))
 	req, err := http.NewRequestWithContext(
-		ctx,
+		opts.Ctx,
 		http.MethodPost,
 		opts.URL,
 		bodyBytes,
@@ -46,15 +39,9 @@ func (h *httpClient) Post(opts *HttpClientPostOptions) (*http.Response, error) {
 }
 
 func (h *httpClient) Put(opts *HttpClientPostOptions) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(
-		opts.Ctx,
-		opts.TimeoutInSeconds,
-	)
-	defer cancel()
-
 	bodyBytes := io.NopCloser(bytes.NewReader(opts.Body))
 	req, err := http.NewRequestWithContext(
-		ctx,
+		opts.Ctx,
 		http.MethodPut,
 		opts.URL,
 		bodyBytes,
@@ -71,15 +58,9 @@ func (h *httpClient) Put(opts *HttpClientPostOptions) (*http.Response, error) {
 func (h *httpClient) Patch(
 	opts *HttpClientPostOptions,
 ) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(
-		opts.Ctx,
-		opts.TimeoutInSeconds,
-	)
-	defer cancel()
-
 	bodyBytes := io.NopCloser(bytes.NewReader(opts.Body))
 	req, err := http.NewRequestWithContext(
-		ctx,
+		opts.Ctx,
 		http.MethodPatch,
 		opts.URL,
 		bodyBytes,
@@ -96,14 +77,8 @@ func (h *httpClient) Patch(
 func (h *httpClient) Delete(
 	opts *HttpClientDeleteOptions,
 ) (*http.Response, error) {
-	ctx, cancel := newContextWithTimeoutIfNotSet(
-		opts.Ctx,
-		opts.TimeoutInSeconds,
-	)
-	defer cancel()
-
 	req, err := http.NewRequestWithContext(
-		ctx,
+		opts.Ctx,
 		http.MethodDelete,
 		opts.URL,
 		nil,
