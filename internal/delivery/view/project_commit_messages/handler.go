@@ -48,11 +48,6 @@ func (v *projectCommitMessagesView) fetchCommitMessages() error {
 func (v *projectCommitMessagesView) copyCommitMessagesToClipboard() {
 	var commitMsgs strings.Builder
 	for index, commit := range v.commitMessages {
-		if currNum := index + 1; currNum >= 6 {
-			commitMsgs.WriteString("...")
-			break
-		}
-
 		if index == len(v.commitMessages)-1 {
 			fmt.Fprintf(&commitMsgs, "- %s", commit)
 			continue
