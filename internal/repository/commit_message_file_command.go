@@ -31,7 +31,7 @@ func (r *repository) WriteCommitMessageToFile(
 	}
 
 	title := fmt.Sprintf("[%s-%s]", cmd.LowerRef, cmd.UpperRef)
-	msgs := []string{title}
+	msgs := []string{title, ""}
 	for _, msg := range cmd.Messages {
 		if cmd.Prefix != nil {
 			msg = fmt.Sprintf("%s %s", *cmd.Prefix, msg)

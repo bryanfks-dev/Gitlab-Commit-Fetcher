@@ -9,13 +9,6 @@ import (
 	"time"
 )
 
-type WriteCommitMessagesToFileOptions struct {
-	LowerRef   string
-	UpperRef   string
-	Filename   string
-	CommitMsgs []string
-}
-
 func (uc *useCase) GetGitlabRepositoryCommitMessages(
 	ctx context.Context,
 	projectID int,
@@ -77,11 +70,12 @@ func (uc *useCase) writeCommitMessagesToFile(
 ) error {
 	msgPrefix := "-"
 	cmd := dto.WriteCommitMessageToFileCommand{
-		Filename: options.Filename,
-		Messages: options.CommitMsgs,
-		LowerRef: options.LowerRef,
-		UpperRef: options.UpperRef,
-		Prefix:   &msgPrefix,
+		ProjectID: options.ProjectID,
+		Filename:  options.Filename,
+		Messages:  options.CommitMsgs,
+		LowerRef:  options.LowerRef,
+		UpperRef:  options.UpperRef,
+		Prefix:    &msgPrefix,
 	}
 	return uc.repo.WriteCommitMessageToFile(cmd)
 }

@@ -114,6 +114,9 @@ func (s *service) GetGitlabRefComparation(
 		return nil, errors.ErrGetGitLabRepositoryRefComparationFailed
 	}
 	dto := mapper.MapGitlabRefComparationToRefComparationResultDTO(&decodedRes)
+	for _, msg := range dto.Commits {
+		s.logger.Infof(msg.Message)
+	}
 	return dto, nil
 }
 
