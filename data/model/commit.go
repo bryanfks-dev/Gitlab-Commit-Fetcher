@@ -31,10 +31,6 @@ func (m *CommitModel) IsMergeCommit() bool {
 		strings.HasPrefix(strings.ToLower(m.Message), "merge")
 }
 
-func (m *CommitModel) IsRevertCommit() bool {
-	return strings.HasPrefix(strings.ToLower(m.Message), "revert")
-}
-
 func (m *CommitModel) GetMessages() []string {
 	msg := strings.TrimSpace(m.Message)
 	if msg == "" {
